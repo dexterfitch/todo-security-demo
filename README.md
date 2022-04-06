@@ -2,7 +2,7 @@
 
 ## TODO Data Model
 
-    1. text         - String
+    1. todoText     - String
     2. authorId     - int
     3. isPublic     - boolean
     4. createDate   - LocalDate
@@ -56,19 +56,53 @@
     * [x] jjwt-jackson
     * [x] mysql-connector-java
     * [x] spring-boot-starter-jdbc
+  * [x] Create base package (todo)
   * [ ] Create models package
-    * [ ] Create AppUser class
-      * [ ] Extend from the User (org.springframework.security.core.userdetails)
-      * [ ] Add Set&lt;String&gt; roles field variable
-      * [ ] Add int userId field variable
-      * [ ] Generate getters/setters
-      * [ ] Generate hashCode/equals
-    * [ ] Create Todo class
-      * [ ] Create String text field variable
-      * [ ] Create int userId field variable
-      * [ ] Create boolean isPublic field variable
-      * [ ] Create LocalDate createDate field variable
-      * [ ] Generate getters/setters
-      * [ ] Generate hashCode/equals
+    * [x] Create AppUser class
+      * [x] Extend from the User (org.springframework.security.core.userdetails)
+      * [x] Add Set&lt;String&gt; roles field variable
+      * [x] Add int userId field variable
+      * [x] Generate getters/setters
+      * [x] Generate hashCode/equals
+      * [x] Add constructor which takes String username, String password, and Set&lt;String&gt; roles
+        * [x] Call super(username, password, roles.stream().map(r -> new SimpleGrantedAuthority("ROLE_" + r)).collect(Collectors.toList()))
+        * [x] Assign to this.userId
+        * [x] Assign to this.roles
+    * [x] Create Todo class
+      * [x] Create String text field variable
+      * [x] Create Integer userId field variable
+      * [x] Create Boolean isPublic field variable
+      * [x] Create LocalDate createDate field variable
+      * [x] Generate getters/setters
+      * [x] Generate hashCode/equals
 * [ ] Create mysql schemas (test/prod)
+  * [ ] Create sql folder in project folder
+  * [ ] Create todo-test.sql
+  * [ ] Create todo-prod.sql
+  * [ ] Drop DB if exists todo-test
+  * [ ] Drop DB if exists todo-prod
+  * [ ] Create DB todo-test
+  * [ ] Create DB todo-prod
+  * [ ] Use todo-test
+  * [ ] Use todo-prod
+  * [ ] Create table users
+    * [ ] userId        int primary key auto_increment
+    * [ ] username      varchar(300) not null unique
+    * [ ] password      varchar(2048) not null
+  * [ ] Create table todos
+    * [ ] todoId        int primary key auto_increment
+    * [ ] todoText      text not null
+    * [ ] authorId      int not null
+    * [ ] isPublic      bit(1) not null
+    * [ ] createDate    date not null
+    * [ ] constraint fk_todos_users foreign key (authorId)
+  * [ ] Create table roles
+    * [ ] roleId        int primary key auto_increment 
+    * [ ] roleName      varchar(20) not null unique
+  * [ ] Create table userroles
+    * [ ] userId        int not null,
+    * [ ] roleId        int not null,
+    * [ ] constraint pk_userroles (userId, roleId),
+    * [ ] constraint fk_users_userroles foreign key (userId) references users(userId)
+    * [ ] constraint fk_roles_userroles foreign key (roleId) references roles(roleId)
 * [ ] Create React Front-End
