@@ -27,13 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
 
         http.authorizeRequests()
-            .antMatchers( HttpMethod.POST, "/api/security/login").permitAll()
-            .antMatchers("/**").denyAll()
+                .antMatchers( HttpMethod.POST, "/api/security/login").permitAll()
+                .antMatchers("/**").denyAll()
 
-            .and()
-            .addFilter( new JwtRequestFilter(converter, authenticationManager() ))
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and()
+                .addFilter( new JwtRequestFilter(converter, authenticationManager() ))
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Bean
