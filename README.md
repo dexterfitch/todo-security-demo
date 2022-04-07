@@ -76,27 +76,53 @@
       * [x] Generate getters/setters
       * [x] Generate hashCode/equals
   * [ ] Create data package
-    * [ ] Create TodoRepo interface
-      * [ ] List&lt;Todo&gt; findAllPublic()
-      * [ ] List&lt;Todo&gt; findByUserId(Integer userId)
-      * [ ] Todo findById( Integer todoId )
-      * [ ] Todo add(Todo toAdd)
-      * [ ] boolean remove(Integer todoId)
-      * [ ] void edit( Todo updated )
-    * [ ] Create UserRepo interface
-      * [ ] AppUser findByUsername( String username )
-      * [ ] AppUser add( AppUser toAdd )
-      * [ ] boolean remove( Integer userId )
-      * [ ] void edit( User updated )
-    * [ ] Create TodoDbRepo class
-      * [ ] Add @Repository
-      * [ ] implements TodoRepo
-        * [ ] generate functions automatically
-    * [ ] Create UserDbRepo class
-      * [ ] Add @Repository
-      * [ ] implements UserRepo
-        * [ ] generate functions automatically
-* [x] Create mysql schemas (test/prod)
+    * [x] Create TodoRepo interface
+      * [x] List&lt;Todo&gt; findAllPublic()
+      * [x] List&lt;Todo&gt; findByUserId(Integer userId)
+      * [x] Todo findById( Integer todoId )
+      * [x] Todo add(Todo toAdd)
+      * [x] boolean remove(Integer todoId)
+      * [x] void edit( Todo updated )
+    * [x] Create UserRepo interface
+      * [x] AppUser findByUsername( String username )
+      * [x] AppUser add( AppUser toAdd )
+      * [x] boolean remove( Integer userId )
+      * [x] void edit( User updated )
+    * [x] Create TodoDbRepo class
+      * [x] Add @Repository
+      * [x] implements TodoRepo
+        * [x] generate functions automatically
+    * [x] Create UserDbRepo class
+      * [x] Add @Repository
+      * [x] implements UserRepo
+        * [x] generate functions automatically
+  * [ ] Create domain package
+    * [ ] Create UserService class
+      * [x] mark with @Service
+      * [x] implements UserDetailsService
+      * [x] add UserRepo field variable
+      * [x] add PasswordEncoder field variable
+      * [x] add constructor which takes in a UserRepo & PasswordEncoder
+      * [x] @Override loadUserByUsername (can return AppUser as a UserDetails object)
+        * [x] use the repo to pass along the user
+        * [x] add //TODO: validate (later we'll check to make sure username isn't null/empty/etc)
+        * [x] if user is not found (we get a null) throw new UsernameNotFoundException(username + " not found")
+        * [x] otherwise, return the user
+      * [x] add AppUser create( String username, String password )
+        * [x] for now just return null
+    * [ ] Create TodoService class
+  * [ ] Create security package
+    * [ ] create SecurityConfig class
+      * [ ] @EnableWebSecurity
+      * [ ] extends WebSecurityConfigurerAdapter
+      * [ ] @Override protected void configure( HttpSecurity http) throws Exception
+        * [ ] leave blank for now
+      * [ ] public PasswordEncoder getEncoder(){ return new BCryptPasswordEncoder(); }
+        * [ ] mark with @Bean
+      * [ ] @Override protected AuthenticationManager authenticationManager() throws Exception
+        * [ ] just return super.authenticationManager();
+        * [ ] mark with @Bean
+* [ ] Create mysql schemas (test/prod)
   * [x] create sql folder in project folder
   * [x] create todo-test.sql
   * [x] create todo-prod.sql

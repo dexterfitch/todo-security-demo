@@ -20,6 +20,8 @@ public class AppUser extends User {
         this.userId = userId;
     }
 
+
+
     public Set<String> getRoles() {
         return roles;
     }
