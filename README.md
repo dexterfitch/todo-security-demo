@@ -15,10 +15,10 @@
 
 ## User Stories
 
-    As a __________, I should [not] be able to ____________.
+As a __________, I should [not] be able to ____________.
 
-    Preconditions: what must be true for the user story to be relevant.
-    Postconditions: what must be true after the user story ends.
+Preconditions: what must be true for the user story to be relevant.
+Postconditions: what must be true after the user story ends.
 
 * [ ] As any user, I should be able to see all public Todos.
 * [ ] As a guest, I should not be able to see any private Todos.
@@ -56,7 +56,16 @@
     * [x] jjwt-jackson
     * [x] mysql-connector-java
     * [x] spring-boot-starter-jdbc
+    * [x] spring-boot-starter-web
   * [x] Create base package (todo)
+    * [x] Create App class
+      * [x] @SpringBootApplication
+      * [x] main
+        * [x] SpringApplication.run( App.class, args );
+  * [x] Create application.properties file
+    * [x] spring.datasource.url=jdbc:mysql://localhost:3306/todo_prod
+    * [x] spring.datasource.username=root
+    * [x] spring.datasource.password=top-secret-password
   * [x] Create models package
     * [x] Create AppUser class
       * [x] Extend from the User (org.springframework.security.core.userdetails)
@@ -113,15 +122,61 @@
     * [ ] Create TodoService class
   * [ ] Create security package
     * [ ] create SecurityConfig class
-      * [ ] @EnableWebSecurity
-      * [ ] extends WebSecurityConfigurerAdapter
-      * [ ] @Override protected void configure( HttpSecurity http) throws Exception
-        * [ ] leave blank for now
-      * [ ] public PasswordEncoder getEncoder(){ return new BCryptPasswordEncoder(); }
-        * [ ] mark with @Bean
-      * [ ] @Override protected AuthenticationManager authenticationManager() throws Exception
-        * [ ] just return super.authenticationManager();
-        * [ ] mark with @Bean
+      * [x] @EnableWebSecurity
+      * [x] extends WebSecurityConfigurerAdapter
+      * [x] @Override protected void configure( HttpSecurity http) throws Exception
+        * [x] http.csrf().disable()
+        * [x] http.cors()
+        * [x] http.authorizeRequests()
+          * [ ] .antMatchers( HttpMethod.POST, "/api/security/login").permitAll()
+          * [x] .antMatchers("/**").denyAll()
+          * [x] .and()
+          * [x] .sessionManagement()
+            * [x] .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+      * [x] public PasswordEncoder getEncoder(){ return new BCryptPasswordEncoder(); }
+        * [x] mark with @Bean
+      * [x] @Override protected AuthenticationManager authenticationManager() throws Exception
+        * [x] just return super.authenticationManager();
+        * [x] mark with @Bean
+    * [x] Create JwtConverter class
+      * [x] Mark as @Component
+      * [x] add a Key field variable (secretKey) assign Keys.secretKeyFor(SignatureAlgorithm.HS256)
+      * [x] add public String getTokenFromUser( User toConvert )
+        * [ ] for now, throw new UnsupportedOperationException()
+      * [x] add public User getUserFromToken( String token )
+        * [ ] for now, throw new UnsupportedOperationException()
+    * [ ] Create JwtRequestFilter class
+      * [x] extends BasicAuthenticationFilter
+      * [x] Add a JwtConverter field
+      * [x] Add a constructor that takes in a JwtConvert and AuthenticationManager
+        * [x] super( authManager )
+        * [x] store the JwtConverter in the field variable
+      * [x] @Override protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+        * [ ] for now, chain.doFilter( request, response );
+      * [x] IN SecurityConfig.java
+        * [x] add @Autowired JwtConverter field variable
+        * [x] right after the .and() call .addFilter( new JwtReqestFilter() )
+  * [ ] Create controllers package
+    * [ ] Add AuthController class
+      * [x] mark as @RestController
+      * [x] add @RequestMapping( "/api/security" )
+      * [x] add AuthenticationManager field variable
+      * [x] add JwtConverter field variable
+      * [x] add UserService field variable
+      * [x] add a constructor that takes in all field variables and sets them
+      * [ ] add ResponseEntity login( @RequestBody Map&lt;String,String&gt; credentials )
+        * [x] mark as @PostMapping("/login")
+        * [x] create UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken( credentials.get("username"), credentials.get("password") );
+        * [ ] in a try/catch( AuthenticationException ex) block...
+          * [ ] Authentication authResult = authManager.authenticate( token );
+          * [ ] if( authResult.isAuthenticated() ){
+            * [ ] String jwt = converter.getTokenFromUser( (User)authResult.getPrincipal());
+            * [ ] return ResponseEnttiy.ok( jwt );
+          * [ ] }
+          * [ ] catch( AuthenticationException ex ){
+            * [ ] ex.printStackTrace( System.err ); }
+          * [ ] return new ResponseEntity( HttpStatus.FORBIDDEN );
+  
 * [ ] Create mysql schemas (test/prod)
   * [x] create sql folder in project folder
   * [x] create todo-test.sql
