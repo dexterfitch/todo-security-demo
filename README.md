@@ -15,10 +15,10 @@
 
 ## User Stories
 
-As a __________, I should [not] be able to ____________.
+    As a __________, I should [not] be able to ____________.
 
-Preconditions: what must be true for the user story to be relevant.
-Postconditions: what must be true after the user story ends.
+    Preconditions: what must be true for the user story to be relevant.
+    Postconditions: what must be true after the user story ends.
 
 * [ ] As any user, I should be able to see all public Todos.
 * [ ] As a guest, I should not be able to see any private Todos.
