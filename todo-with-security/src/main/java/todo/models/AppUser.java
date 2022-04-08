@@ -13,8 +13,8 @@ public class AppUser extends User {
 
     public AppUser( Integer userId, String username, String password, Set<String> roles ){
         super( username, password,
-            roles.stream().map(
-                r -> new SimpleGrantedAuthority("ROLE_" + r)).collect(Collectors.toList()));
+                roles.stream().map(
+                        r -> new SimpleGrantedAuthority("ROLE_" + r)).collect(Collectors.toList()));
 
         this.roles = roles;
         this.userId = userId;
